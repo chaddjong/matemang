@@ -11,6 +11,7 @@ import {
 } from '@/components';
 import { menuItems, MenuItem } from '@/data/menuData';
 import ModalAddOrder from '@/components/modal/ModalAddOrder';
+import type { SelectionResult } from '@/components/modal/ModalAddOrder';
 
 type CartItemType = MenuItem & {
   cartId: string; // unique per cart line
@@ -65,16 +66,10 @@ export default function HomePage() {
     setIsModalOpen(false);
   };
 
-  const handleConfirmFromModal = (data: {
-    quantity: number;
-    selectedSize?: any;
-    selectedTopping?: any;
-    selectedSugar?: string | null;
-    finalUnitPrice: number;
-  }) => {
+  const handleConfirmFromModal = (data: SelectionResult) => {
     if (!modalItem) return;
 
-    const cartId = `${modalItem.id}-${Date.now()}`; // unique
+    const cartId = `${modalItem.id}-${Date.now()}`;
     const newCartItem: CartItemType = {
       ...modalItem,
       cartId,

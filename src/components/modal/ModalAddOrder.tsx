@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useState, useMemo, useEffect } from 'react';
 import type { MenuItem, SizeOption, ToppingOption } from '@/data/menuData';
 
-type SelectionResult = {
+export type SelectionResult = {
   quantity: number;
   selectedSize?: SizeOption | null;
   selectedTopping?: ToppingOption | null;
