@@ -10,6 +10,7 @@ export type SelectionResult = {
   selectedSize?: SizeOption | null;
   selectedTopping?: ToppingOption | null;
   selectedSugar?: string | null;
+  notes?: string;
   finalUnitPrice: number;
 };
 
@@ -31,6 +32,7 @@ export default function ModalAddOrder({
   const [toppingIdx, setToppingIdx] = useState<number | null>(null);
   const [sugarIdx, setSugarIdx] = useState<number | null>(null);
   const [validationMsg, setValidationMsg] = useState<string | null>(null);
+  const [notes, setNotes] = useState('');
 
   // Reset state whenever a new item opens — useEffect (side-effect)
   useEffect(() => {
@@ -39,6 +41,7 @@ export default function ModalAddOrder({
       setSizeIdx(null);
       setToppingIdx(null);
       setSugarIdx(null);
+      setNotes('');
       setValidationMsg(null);
     }
   }, [isOpen, item?.id]);
@@ -83,6 +86,7 @@ export default function ModalAddOrder({
       selectedSize: sizeIdx !== null ? sizes[sizeIdx] : null,
       selectedTopping: toppingIdx !== null ? toppings[toppingIdx] : null,
       selectedSugar: sugarIdx !== null ? sugars[sugarIdx] : null,
+      notes,
       finalUnitPrice: unitPrice,
     });
 
@@ -133,7 +137,7 @@ export default function ModalAddOrder({
         <div className="max-h-[60vh] overflow-y-auto p-4 space-y-4">
           {/* quantity */}
           <div>
-            <label className="text-sm font-medium text-gray-700">Jumlah</label>
+            <label className="text-sm font-medium text-gray-700">Jumlah </label>
             <div className="mt-2 inline-flex items-center gap-3">
               <button
                 onClick={dec}
@@ -243,6 +247,20 @@ export default function ModalAddOrder({
             </div>
           )}
 
+          {/* NOTES */}
+          <div>
+            <p className="text-sm font-medium text-gray-700 mb-1">
+              Catatan (opsional)
+            </p>
+            <textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="Contoh: sedikit es, jangan terlalu manis"
+              className="w-full border rounded-md p-2 text-sm"
+              rows={2}
+            />
+          </div>
+          
           {/* validation message */}
           {validationMsg && (
             <p className="text-sm text-red-600">{validationMsg}</p>
@@ -263,7 +281,7 @@ export default function ModalAddOrder({
               onClick={handleConfirm}
               className="ml-auto bg-[#FA812F] hover:bg-[#FAB12F] text-white font-medium px-5 py-3 rounded-lg shadow transition"
             >
-              Tambah ({quantity}) — Rp {totalPrice.toLocaleString('id-ID')}
+              ({quantity}) — Rp {totalPrice.toLocaleString('id-ID')}
             </button>
           </div>
         </div>

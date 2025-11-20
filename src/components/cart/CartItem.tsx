@@ -3,18 +3,31 @@ import Image from 'next/image';
 type CartItemProps = {
   name: string;
   price: number;
-  image?: string;
-  quantity?: number;
-  onIncrease?: () => void;
-  onDecrease?: () => void;
+  image: string;
+  quantity: number;
+
+  selectedSize?: { label: string; addPrice?: number } | null;
+  selectedTopping?: { label: string; addPrice: number } | null;
+  selectedSugar?: string | null;
+
+  notes?: string;
+
+  onIncrease: () => void;
+  onDecrease: () => void;
   onRemove: () => void;
 };
 
 export default function CartItem({
   name,
   price,
-  image = '/menu/default.jpg',
-  quantity = 1,
+  image,
+  quantity,
+
+  selectedSize,
+  selectedTopping,
+  selectedSugar,
+  notes,
+
   onIncrease,
   onDecrease,
   onRemove,
@@ -72,6 +85,13 @@ export default function CartItem({
           />
         </svg>
       </button>
+      <div className="text-xs text-gray-500 mt-1 space-y-1">
+        {selectedSize && <p>Ukuran: {selectedSize.label}</p>}
+        {selectedTopping && <p>Topping: {selectedTopping.label}</p>}
+        {selectedSugar && <p>Gula: {selectedSugar}</p>}
+        {/* {notes && notes.length > 0 && <p>Catatan: {notes}</p>} */}
+        {notes?.trim() && <p>Catatan: {notes}</p>}
+      </div>
     </li>
   );
 }
