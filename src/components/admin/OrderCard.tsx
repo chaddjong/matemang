@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ChangeEvent } from 'react';
 import { useOrderStore, Order } from '@/store/orderStore';
 
 interface OrderCardProps {
@@ -39,11 +39,11 @@ export default function OrderCard({ order }: OrderCardProps) {
     setCountdown(order.id, endTime);
   };
 
-  const handleChangeStatus = (e) => {
+  const handleChangeStatus = (e: ChangeEvent<HTMLSelectElement>) => {
     updateStatus(order.id, e.target.value);
   };
 
-  const formatTime = (ms) => {
+  const formatTime = (ms: number) => {
     if (!ms || ms <= 0) return '00:00';
 
     const sec = Math.floor(ms / 1000);
