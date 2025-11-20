@@ -102,7 +102,7 @@ export default function OrderCard({ order }) {
           className="border rounded-md px-2 py-1 text-sm"
         >
           <option value="pending">Menunggu</option>
-          <option value="cooking">Sedang Dimasak</option>
+          <option value="cooking">Sedang Dimasak/Dibuat</option>
           <option value="ready">Sudah Siap</option>
           <option value="done">Selesai</option>
         </select>

@@ -1,7 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import WelcomeImage from '../../../public/images/WhatsApp Image 2025-10-21 at 20.56.23.jpeg'
+import WelcomeImage from '../../../public/images/WhatsApp Image 2025-10-21 at 20.56.23.jpeg';
+import {
+  AiFillInstagram,
+  AiFillFacebook,
+  AiOutlineWhatsApp,
+} from 'react-icons/ai';
 
 export default function WelcomeSection() {
   const scrollToMain = () => {
@@ -30,15 +35,25 @@ export default function WelcomeSection() {
           </span>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight text-gray-900 mb-4">
-            Dari Sumber Terbaik <br />
-            <span className="text-[#FE0000]">Untuk Pecinta Rasa Sejati</span>
+            Dari Buah Terbaik <br />
+            <span className="text-[#FE0000]">
+              Untuk Pecinta Segar Garis Keras!
+            </span>
           </h1>
 
           <p className="text-gray-600 mb-6 max-w-lg mx-auto md:mx-0">
-            Kami memadukan daun teh pilihan dengan teknik penyeduhan yang tepat,
-            menciptakan harmoni rasa yang sempurna di dalam gelas. Sebuah
-            penghormatan bagi Anda yang menghargai setiap detil kenikmatan.
+            Kami memadukan buah-buah matang alami dengan cara yang super fresh,
+            biar tiap tegukan langsung bikin “wow, seger banget!”. Ini bukan jus
+            biasa—ini Matemang Jus, teman setia saat kamu butuh mood naik dan
+            tenggorokan jadi happy! 🍹✨
           </p>
+
+          {/* ===== Jam & Alamat ===== */}
+          <div className="mb-6 max-w-lg mx-auto md:mx-0 text-gray-700 text-sm md:text-base space-y-1">
+            <p className="font-semibold">Senin - Sabtu</p>
+            <p>07:30am - 18:00pm</p>
+            <p>Depan Universitas Klabat, Airmadidi Atas, Minahasa Utara</p>
+          </div>
 
           {/* BUTTONS */}
           <div className="flex flex-col sm:flex-row gap-3 mb-6 justify-center md:justify-start">
@@ -48,20 +63,37 @@ export default function WelcomeSection() {
             >
               Pesan Sekarang →
             </button>
-            {/* Stats */}
-            <div className="flex gap-8 sm:gap-10 md:ml-4 text-sm font-semibold text-gray-700 justify-center md:justify-start">
-              <div className="text-center md:text-left">
-                <p className="text-xl font-bold">2.5K+</p>
-                <span className="text-gray-500">Order</span>
-              </div>
-              <div className="text-center md:text-left">
-                <p className="text-xl font-bold">80+</p>
-                <span className="text-gray-500">Varietas</span>
-              </div>
-              <div className="text-center md:text-left">
-                <p className="text-xl font-bold">4.8 ⭐</p>
-                <span className="text-gray-500">Rating</span>
-              </div>
+            {/* Social Media */}
+            <div className="flex gap-6 sm:gap-8 md:ml-4 text-4xl items-center justify-center md:justify-start">
+              {/* Instagram */}
+              <a
+                href="https://www.instagram.com/matemang2204"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-pink-500 hover:scale-110 transition-transform"
+              >
+                <AiFillInstagram />
+              </a>
+
+              {/* Facebook */}
+              <a
+                href="https://www.facebook.com/Matemang"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:scale-110 transition-transform"
+              >
+                <AiFillFacebook />
+              </a>
+
+              {/* WhatsApp */}
+              <a
+                href="https://wa.me/6282347183228"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-green-500 hover:scale-110 transition-transform"
+              >
+                <AiOutlineWhatsApp />
+              </a>
             </div>
           </div>
         </div>

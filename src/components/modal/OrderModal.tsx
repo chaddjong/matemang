@@ -4,6 +4,37 @@ import React, { useState, useEffect } from 'react';
 import { useOrderStore } from '@/store/orderStore';
 
 // ==========================
+// TYPES
+// ==========================
+interface OrderItem {
+  name: string;
+  qty: number;
+  price: number;
+}
+
+interface OrderStore {
+  orders: Order[];
+  // tambahkan state/fungsi lain jika ada
+}
+
+interface Order {
+  id: string;
+  items: OrderItem[];
+  total: number;
+  status: 'pending' | 'cooking' | 'ready' | 'done' | string;
+  timerEnd?: number;
+}
+
+interface OrderModalProps {
+  open: boolean;
+  onClose: () => void;
+}
+
+interface OrderDetailViewProps {
+  order: Order;
+}
+
+// ==========================
 // BADGE WARNA UNTUK STATUS
 // ==========================
 function StatusBadge({ status }: { status: string }) {
@@ -27,11 +58,11 @@ function StatusBadge({ status }: { status: string }) {
 // ==========================
 // MODAL UTAMA
 // ==========================
-export default function OrderModal({ open, onClose }: any) {
-  const { orders } = useOrderStore();
+export default function OrderModal({ open, onClose }: OrderModalProps) {
+  const { orders } = useOrderStore() as OrderStore;
 
   const [orderId, setOrderId] = useState('');
-  const [orderData, setOrderData] = useState<any>(null);
+  const [orderData, setOrderData] = useState<Order | 'not-found' | null>(null);
 
   const [show, setShow] = useState(open);
   const [animate, setAnimate] = useState(false);
@@ -47,7 +78,7 @@ export default function OrderModal({ open, onClose }: any) {
   }, [open]);
 
   const handleCheckOrder = () => {
-    const found = orders.find((o: any) => o.id === orderId.trim());
+    const found = orders.find((o: Order) => o.id === orderId.trim());
     setOrderData(found || 'not-found');
   };
 
@@ -129,7 +160,7 @@ export default function OrderModal({ open, onClose }: any) {
 // ==========================
 // DETAIL ORDER (Card Style)
 // ==========================
-function OrderDetailView({ order }: any) {
+function OrderDetailView({ order }: OrderDetailViewProps) {
   const [remaining, setRemaining] = useState(0);
 
   // Hitung mundur
@@ -140,7 +171,7 @@ function OrderDetailView({ order }: any) {
     }
 
     const tick = () => {
-      const diff = order.timerEnd - Date.now();
+      const diff = order.timerEnd! - Date.now();
       setRemaining(diff > 0 ? diff : 0);
     };
 
@@ -164,7 +195,7 @@ function OrderDetailView({ order }: any) {
 
       {/* ITEMS */}
       <div className="space-y-2">
-        {order.items.map((item: any, i: number) => (
+        {order.items.map((item: OrderItem, i: number) => (
           <div
             key={i}
             className="flex justify-between text-sm text-gray-700 border-b pb-1"
@@ -221,7 +252,7 @@ function statusText(status: string) {
     case 'pending':
       return 'Menunggu Diproses';
     case 'cooking':
-      return 'Sedang Dimasak';
+      return 'Sedang Dimasak/Dibuat';
     case 'ready':
       return 'Siap Diambil';
     case 'done':
