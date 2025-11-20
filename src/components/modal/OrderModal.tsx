@@ -28,6 +28,7 @@ interface Order {
 interface OrderModalProps {
   open: boolean;
   onClose: () => void;
+  onSubmit?: (orderId: string) => void;
 }
 
 interface OrderDetailViewProps {
@@ -58,7 +59,11 @@ function StatusBadge({ status }: { status: string }) {
 // ==========================
 // MODAL UTAMA
 // ==========================
-export default function OrderModal({ open, onClose }: OrderModalProps) {
+export default function OrderModal({
+  open,
+  onClose,
+  onSubmit,
+}: OrderModalProps) {
   const { orders } = useOrderStore() as unknown as OrderStore;
 
   const [orderId, setOrderId] = useState('');
@@ -80,6 +85,11 @@ export default function OrderModal({ open, onClose }: OrderModalProps) {
   const handleCheckOrder = () => {
     const found = orders.find((o: Order) => o.id === orderId.trim());
     setOrderData(found || 'not-found');
+
+    if (found) {
+      // trigger callback ke parent
+      onSubmit?.(found.id);
+    }
   };
 
   if (!show) return null;
