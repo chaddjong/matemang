@@ -2,7 +2,14 @@
 
 import { useEffect, useState } from 'react';
 
-export default function ModalSuccessOrder({ open, orderId, onClose, onCheck }) {
+interface ModalSuccessOrderProps {
+  open: boolean;
+  orderId: string;
+  onClose: () => void;
+  onCheck: () => void;
+}
+
+export default function ModalSuccessOrder({ open, orderId, onClose, onCheck }: ModalSuccessOrderProps) {
   const [show, setShow] = useState(open);
   const [animate, setAnimate] = useState(false);
 
