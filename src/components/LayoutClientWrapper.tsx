@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { WelcomeSection } from '@/components';
 import OrderModal from '@/components/modal/OrderModal';
 import MatemangLogo from '../../public/images/matemang_logo.jpeg';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function LayoutClientWrapper({
   children,
@@ -14,11 +14,31 @@ export default function LayoutClientWrapper({
   children: React.ReactNode;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [passwordInput, setPasswordInput] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const pathname = usePathname();
+  const router = useRouter();
 
   const handleSubmitOrder = (orderId: string) => {
     console.log('Nomor Pesanan:', orderId);
     setIsModalOpen(false);
+  };
+
+  const handleAdminClick = () => {
+    setPasswordInput('');
+    setPasswordError('');
+    setIsPasswordModalOpen(true);
+  };
+
+  const handlePasswordSubmit = () => {
+    const correctPassword = 'mate123'; // Password hardcoded
+    if (passwordInput === correctPassword) {
+      setIsPasswordModalOpen(false);
+      router.push('/admin');
+    } else {
+      setPasswordError('Password salah! Silakan coba lagi.');
+    }
   };
 
   return (
@@ -46,8 +66,11 @@ export default function LayoutClientWrapper({
           </div>
 
           <nav className="flex items-center gap-4">
-            <button className="text-sm font-medium hover:text-primary transition">
-              <Link href="/admin">Admin</Link>
+            <button
+              onClick={handleAdminClick}
+              className="text-sm font-medium hover:text-primary transition"
+            >
+              Admin
             </button>
 
             <button
@@ -60,12 +83,47 @@ export default function LayoutClientWrapper({
         </div>
       </header>
 
-      {/* MODAL */}
+      {/* MODAL ORDER */}
       <OrderModal
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSubmit={handleSubmitOrder}
       />
+
+      {/* MODAL PASSWORD */}
+      {isPasswordModalOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-6 w-80 flex flex-col items-center">
+            <h2 className="text-lg font-semibold mb-4">
+              Masukkan Password Admin
+            </h2>
+            <input
+              type="password"
+              value={passwordInput}
+              onChange={(e) => setPasswordInput(e.target.value)}
+              className="w-full border rounded-lg px-3 py-2 mb-2"
+              placeholder="Password"
+            />
+            {passwordError && (
+              <p className="text-red-600 text-sm mb-2">{passwordError}</p>
+            )}
+            <div className="flex gap-2">
+              <button
+                onClick={() => setIsPasswordModalOpen(false)}
+                className="px-4 py-2 bg-gray-300 rounded-lg text-sm"
+              >
+                Batal
+              </button>
+              <button
+                onClick={handlePasswordSubmit}
+                className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm"
+              >
+                Masuk
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* WELCOME SECTION - hanya tampil di halaman user, bukan admin */}
       {pathname !== '/admin' && <WelcomeSection />}
