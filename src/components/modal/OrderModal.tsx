@@ -59,7 +59,7 @@ function StatusBadge({ status }: { status: string }) {
 // MODAL UTAMA
 // ==========================
 export default function OrderModal({ open, onClose }: OrderModalProps) {
-  const { orders } = useOrderStore() as OrderStore;
+  const { orders } = useOrderStore() as unknown as OrderStore;
 
   const [orderId, setOrderId] = useState('');
   const [orderData, setOrderData] = useState<Order | 'not-found' | null>(null);
