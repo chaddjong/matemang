@@ -309,7 +309,7 @@ export default function HomePage() {
           <div className="bg-white rounded-xl p-6 w-80 flex flex-col items-center">
             <h2 className="text-lg font-semibold mb-4">Scan QRIS / VA</h2>
             <Image
-              src="/images/QRIS.PNG"
+              src="/images/matemang-qris.PNG"
               alt="QRIS"
               className="w-full max-w-sm h-auto mb-4"
               width={600}
