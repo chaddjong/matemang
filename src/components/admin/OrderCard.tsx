@@ -20,7 +20,7 @@ export default function OrderCard({ order }: OrderCardProps) {
     }
 
     const tick = () => {
-      const diff = order.timerEnd - Date.now();
+      const diff = (order.timerEnd ?? 0) - Date.now();
       setRemaining(diff > 0 ? diff : 0);
     };
 
