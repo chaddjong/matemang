@@ -1,11 +1,21 @@
 import { create } from 'zustand';
 
+// src/store/orderStore.ts
+export interface OrderItem {
+  name: string;
+  qty: number;
+  price: number;
+}
+
 export interface Order {
   id: string;
-  customerName: string;
+  items: OrderItem[]; // ✅ tambahkan ini
   total: number;
-  status: string;
-  // tambahkan field lain sesuai kebutuhan
+  status: 'pending' | 'cooking' | 'ready' | 'done' | string;
+  paymentMethod?: 'cash' | 'qris';
+  createdAt?: string;
+  timerStart?: number | null;
+  timerEnd?: number;
 }
 
 interface OrderStore {
@@ -18,20 +28,16 @@ interface OrderStore {
 
 export const useOrderStore = create<OrderStore>((set) => ({
   orders: [],
-
   setOrders: (orders) => set({ orders }),
-
   addOrder: (order) =>
     set((state) => ({
       orders: [...state.orders, { ...order, timerStart: null }],
     })),
-
-  updateStatus: (id: string, status: string) =>
+  updateStatus: (id, status) =>
     set((state) => ({
       orders: state.orders.map((o) => (o.id === id ? { ...o, status } : o)),
     })),
-
-  setCountdown: (id: string, endTime: number) =>
+  setCountdown: (id, endTime) =>
     set((state) => ({
       orders: state.orders.map((o) =>
         o.id === id ? { ...o, timerEnd: endTime } : o
