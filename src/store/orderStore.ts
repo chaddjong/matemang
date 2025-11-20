@@ -12,6 +12,8 @@ interface OrderStore {
   orders: Order[];
   setOrders: (orders: Order[]) => void;
   addOrder: (order: Order) => void;
+  updateStatus: (id: string, status: string) => void;
+  setCountdown: (id: string, endTime: number) => void;
 }
 
 export const useOrderStore = create<OrderStore>((set) => ({
@@ -29,7 +31,7 @@ export const useOrderStore = create<OrderStore>((set) => ({
       orders: state.orders.map((o) => (o.id === id ? { ...o, status } : o)),
     })),
 
-  setCountdown: (id: string, endTime: string) =>
+  setCountdown: (id: string, endTime: number) =>
     set((state) => ({
       orders: state.orders.map((o) =>
         o.id === id ? { ...o, timerEnd: endTime } : o
