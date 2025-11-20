@@ -335,7 +335,10 @@ export default function HomePage() {
         onClose={() => setSuccessOpen(false)}
         onCheck={() => {
           setSuccessOpen(false);
-          document.querySelector('button:text("Pesanan Saya")')?.click();
+          const button = document.querySelector(
+            'button:text("Pesanan Saya")'
+          ) as HTMLButtonElement | null;
+          button?.click();
         }}
       />
     </div>
