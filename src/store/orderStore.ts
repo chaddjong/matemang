@@ -1,10 +1,15 @@
 import { create } from 'zustand';
 
 // src/store/orderStore.ts
+// orderStore.ts
 export interface OrderItem {
   name: string;
   qty: number;
   price: number;
+  selectedSize?: { label: string }; // opsional
+  selectedTopping?: { label: string }; // opsional
+  selectedSugar?: string; // opsional, misal "Normal", "Half"
+  notes?: string; // opsional catatan tambahan
 }
 
 export interface Order {

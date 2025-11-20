@@ -1,9 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useOrderStore } from '@/store/orderStore';
+import { useOrderStore, Order } from '@/store/orderStore';
 
-export default function OrderCard({ order }) {
+interface OrderCardProps {
+  order: Order;
+}
+
+export default function OrderCard({ order }: OrderCardProps) {
   const { updateStatus, setCountdown } = useOrderStore();
 
   const [remaining, setRemaining] = useState(0);
