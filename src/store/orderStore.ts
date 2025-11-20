@@ -6,10 +6,10 @@ export interface OrderItem {
   name: string;
   qty: number;
   price: number;
-  selectedSize?: { label: string }; // opsional
-  selectedTopping?: { label: string }; // opsional
-  selectedSugar?: string; // opsional, misal "Normal", "Half"
-  notes?: string; // opsional catatan tambahan
+  selectedSize?: { label: string; addPrice?: number } | null;
+  selectedTopping?: { label: string; addPrice?: number } | null;
+  selectedSugar?: string | null;
+  notes?: string;
 }
 
 export interface Order {
